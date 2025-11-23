@@ -108,12 +108,6 @@ Armazena:
 
 ---
 
-### **LogSistema**
-
-Auditoria completa de ações importantes no sistema.
-
----
-
 # 🔧 3. Diagrama de Classes — Responsabilidades
 
 O diagrama de classes define as responsabilidades de cada entidade no código:
