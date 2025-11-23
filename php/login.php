@@ -1,6 +1,6 @@
 <?php
+session_start();
 require_once 'conexao.php';
-
 
 $erro = "";
 
@@ -71,7 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </div>
             </form>
             <div class="text-center mt-3">
-                <small class="text-muted">Use: ana.pereira@tech.com / senha123</small>
+                <small class="text-muted">Use: ana.pereira@tech.com / 123</small>
             </div>
         </div>
     </div>

@@ -90,11 +90,22 @@ $rotinas = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <div class="container">
         <a class="navbar-brand" href="#"><i class="fas fa-tasks me-2"></i>Sistema de Rotinas</a>
 
-        <span class="text-white">
-            Olá, <strong><?= $_SESSION['nome'] ?></strong>
-        </span>
+        <div class="d-flex align-items-center">
+            <span class="text-white me-3">
+                Olá, <strong><?= $_SESSION['nome'] ?></strong>
+                <span class="badge bg-light text-primary ms-2"><?= $_SESSION['nivel'] ?></span>
+            </span>
 
-        <a href="logout.php" class="btn btn-light btn-sm ms-3">Sair</a>
+            <?php if ($_SESSION['nivel'] == 'ADMIN' || $_SESSION['nivel'] == 'MASTER'): ?>
+                <a href="cadastro_usuario.php" class="btn btn-light btn-sm me-2">
+                    <i class="fas fa-user-plus me-1"></i>Usuários
+                </a>
+            <?php endif; ?>
+
+            <a href="logout.php" class="btn btn-outline-light btn-sm">
+                <i class="fas fa-sign-out-alt me-1"></i>Sair
+            </a>
+        </div>
     </div>
 </nav>
 
