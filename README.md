@@ -1,6 +1,6 @@
 # Sistema de Gerenciamento de Rotinas, Ações e Empresas
 
-## 🏢 1. Visão Geral do Sistema
+## 1. Visão Geral do Sistema
 
 Este sistema tem como objetivo **gerenciar rotinas, ações e delegações** dentro de uma ou várias empresas, oferecendo controle completo sobre:
 
@@ -15,7 +15,7 @@ Toda a base segue os requisitos funcionais e não funcionais fornecidos (RF/RNF)
 
 ---
 
-# 🗂️ 2. Modelo Conceitual (ER) — Explicação dos Diagramas
+# 2. Modelo Conceitual (ER) — Explicação dos Diagramas
 
 O sistema possui as seguintes entidades principais:
 
@@ -108,11 +108,11 @@ Armazena:
 
 ---
 
-# 🔧 3. Diagrama de Classes — Responsabilidades
+# 3. Diagrama de Classes — Responsabilidades
 
 O diagrama de classes define as responsabilidades de cada entidade no código:
 
-### 📌 **Usuário**
+### **Usuário**
 
 Métodos:
 
@@ -120,14 +120,14 @@ Métodos:
 * redefinirSenha()
 * alterarStatus()
 
-### 📌 **Projeto**
+### **Projeto**
 
 Métodos:
 
 * adicionarRotina()
 * removerRotina()
 
-### 📌 **Rotina**
+### **Rotina**
 
 Métodos:
 
@@ -135,7 +135,7 @@ Métodos:
 * concluir()
 * atualizarStatus()
 
-### 📌 **Ação**
+### **Ação**
 
 Métodos:
 
@@ -143,20 +143,20 @@ Métodos:
 * atualizar()
 * marcarConcluida()
 
-### 📌 **DelegacaoRotina**
+### **DelegacaoRotina**
 
 Métodos:
 
 * atualizarProgresso()
 
-### 📌 **Tag**
+### **Tag**
 
 Métodos:
 
 * aplicarEmRotina()
 * removerDeRotina()
 
-### 📌 **LogSistema**
+### **LogSistema**
 
 Métodos:
 
@@ -166,7 +166,7 @@ Cada método corresponde diretamente às operações necessárias para cumprir o
 
 ---
 
-# 🧍 4. Diagramas de Caso de Uso — Explicação
+# 4. Diagramas de Caso de Uso — Explicação
 
 Você enviou vários casos de uso, cada um detalhando as permissões:
 
@@ -234,7 +234,7 @@ Casos:
 
 ---
 
-# 🔁 5. Diagramas de Sequência — Funcionamento Interno
+# 5. Diagramas de Sequência — Funcionamento Interno
 
 O diagrama de sequência descreve o fluxo completo entre:
 
@@ -259,13 +259,13 @@ Inclui tratamento de:
 
 ---
 
-# 🧭 6. Diagramas de Atividade — Fluxos Operacionais
+# 6. Diagramas de Atividade — Fluxos Operacionais
 
 Você enviou diagramas detalhados para:
 
 ---
 
-## ✔ Login
+## Login
 
 Mostra:
 
@@ -276,7 +276,7 @@ Mostra:
 
 ---
 
-## ✔ Gerenciamento de Usuários
+## Gerenciamento de Usuários
 
 Inclui:
 
@@ -286,13 +286,13 @@ Inclui:
 
 ---
 
-## ✔ Gerenciamento de Empresas
+## Gerenciamento de Empresas
 
 Fluxo idêntico ao de usuários, mas limitado ao MASTER.
 
 ---
 
-## ✔ Gerenciamento de Rotinas
+## Gerenciamento de Rotinas
 
 * criar rotina
 * adicionar ações
@@ -302,7 +302,7 @@ Fluxo idêntico ao de usuários, mas limitado ao MASTER.
 
 ---
 
-## ✔ Execução de Rotinas (para funcionários)
+## Execução de Rotinas (para funcionários)
 
 Fluxo:
 
@@ -313,7 +313,7 @@ Fluxo:
 
 ---
 
-# 🔗 7. Mapeamento com Requisitos (RF / RNF)
+# 7. Mapeamento com Requisitos (RF / RNF)
 
 Exemplos:
 
@@ -353,7 +353,7 @@ Relaciona-se com:
 
 ---
 
-# 🛡️ 8. Regras Técnicas e Recomendações
+# 8. Regras Técnicas e Recomendações
 
 * Usar **hash seguro** para senhas (bcrypt/argon2)
 * Aplicar **2FA** com segredo armazenado por usuário
@@ -362,24 +362,7 @@ Relaciona-se com:
 * Endpoints REST padronizados
 * Camada de sincronização para uso offline
 
-
-Perfeito! Já li **toda a base de dados** que você enviou (arquivo `trabalhoextensao.sql`), e posso integrar **toda a explicação das funções e arquivos PHP** (`login.php`, `logout.php`, `cadastro_usuario.php`, `interface.php`, `conexao.php`) **dentro do README.md final**, junto com a documentação dos diagramas.
-
-⚠️ **MAS**: para documentar corretamente os arquivos PHP, eu preciso que você me envie o **conteúdo** deles — atualmente sei apenas que eles foram enviados, mas **não consigo visualizar o código sem você me mandar o conteúdo aqui no chat**.
-
 ---
-
-# ✅ O que eu já posso fazer agora
-
-Eu já posso:
-
-✔️ Integrar a documentação completa da **base de dados** (SQL) → e já criei abaixo
-✔️ Relacionar cada tabela com os diagramas → já fiz abaixo
-✔️ Preparar a estrutura final do README com espaço para as funções e arquivos PHP
-✔️ Deixar tudo pronto para você só colar o código dos arquivos PHP e eu completar
-
----
-
 
 # 🗄️ **9. Estrutura da Base de Dados (MySQL)**
 
@@ -387,7 +370,7 @@ A base foi construída seguindo o modelo conceitual e o diagrama de classes apre
 
 ---
 
-# 📌 **9.1. Tabela `usuario`**
+# **9.1. Tabela `usuario`**
 
 Representa todos os usuários cadastrados no sistema.
 
@@ -409,7 +392,7 @@ Representa todos os usuários cadastrados no sistema.
 
 ---
 
-# 📌 **9.2. Tabela `empresa`**
+# **9.2. Tabela `empresa`**
 
 Cadastro das empresas.
 
@@ -425,7 +408,7 @@ Relacionamento:
 
 ---
 
-# 📌 **9.3. Tabela `projeto`**
+# **9.3. Tabela `projeto`**
 
 Agrupa rotinas relacionadas.
 
@@ -441,7 +424,7 @@ Relacionamento:
 
 ---
 
-# 📌 **9.4. Tabela `rotina`**
+# **9.4. Tabela `rotina`**
 
 Tabela central do sistema.
 
@@ -467,7 +450,7 @@ Relacionamentos:
 
 ---
 
-# 📌 **9.5. Tabela `acao`**
+# **9.5. Tabela `acao`**
 
 Representa as etapas de uma rotina.
 
@@ -490,7 +473,7 @@ Relacionamento:
 
 ---
 
-# 📌 **9.6. Tabela `delegacaorotina`**
+# **9.6. Tabela `delegacaorotina`**
 
 Indica que uma rotina foi atribuída a um funcionário.
 
@@ -509,7 +492,7 @@ Regras:
 
 ---
 
-# 📌 **9.7. Tabela `tag`**
+# **9.7. Tabela `tag`**
 
 Tags para classificação de rotinas.
 
@@ -522,7 +505,7 @@ Tags para classificação de rotinas.
 
 ---
 
-# 📌 **9.8. Tabela `rotinatag`**
+# **9.8. Tabela `rotinatag`**
 
 Associação N×N entre rotinas e tags.
 
@@ -537,7 +520,7 @@ Relacionamento:
 
 ---
 
-# 📌 **9.9. Índices e Integridade Referencial**
+# **9.9. Índices e Integridade Referencial**
 
 O SQL usa:
 
@@ -555,33 +538,33 @@ Isso garante consistência e segue exatamente o modelo do seu diagrama ER.
 
 Agora preciso apenas dos códigos para completar esta seção:
 
-# 🧩 **10.  Funções PHP e Arquitetura Backend**
+# **10.  Funções PHP e Arquitetura Backend**
 
-### 📌 10.1. `conexao.php`
+### 10.1. `conexao.php`
 
 * função de conexão com o banco
 * Tratamento de erro
 
-### 📌 10.2. `login.php`
+### 10.2. `login.php`
 
 * Fluxo completo de autenticação
 * Verificação de senha
 * Validação de sessão
 * Redirecionamentos
 
-### 📌 10.3. `logout.php`
+### 10.3. `logout.php`
 
 * Encerramento de sessão
 * Segurança
 * Limpeza de cookies
 
-### 📌 10.4. `cadastro_usuario.php`
+### 10.4. `cadastro_usuario.php`
 
 * Sanitização de entrada
 * Criação de usuário
 * Hash de senha
 
-### 📌 10.5. `interface.php`
+### 10.5. `interface.php`
 
 * Como rotinas são carregadas
 * Consulta SQL
