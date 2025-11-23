@@ -5,7 +5,7 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 $host = 'localhost';
-$dbname = 'teste'; // Confirme o nome do seu banco
+$dbname = 'teste'; 
 $username = 'root';
 $password = '';
 
