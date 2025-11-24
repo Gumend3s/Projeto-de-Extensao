@@ -12,7 +12,7 @@ $idUsuario = $_SESSION['idUsuario'];
 $idEmpresa = $_SESSION['idEmpresa'];
 $mensagem = "";
 
-// === INSERÇÃO DE ROTINA ===
+// Insersão de rotina
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['acao']) && $_POST['acao'] == 'criar_rotina') {
 
     try {
@@ -42,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['acao']) && $_POST['aca
         $stmt = $pdo->prepare($sql);
         $stmt->execute([
             ':idProjeto'      => $_POST['idProjeto'],
-            ':idCriador'      => $idUsuario, // SEMPRE O USUÁRIO LOGADO
+            ':idCriador'      => $idUsuario,
             ':nome'           => $_POST['nome'],
             ':status'         => 'PENDENTE',
             ':prioridade'     => $_POST['prioridade'],
@@ -50,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['acao']) && $_POST['aca
             ':dataLimite'     => $dataLimite
         ]);
 
-        // Redireciona para evitar reenvio de formulário (padrão PRG)
+        // Redireciona para evitar reenvio de formulário por padrão PRG(Post-Redirect-Get)
         $_SESSION['mensagem'] = "<div class='alert alert-success'>Rotina criada com sucesso!</div>";
         header("Location: interface.php");
         exit;
@@ -62,13 +62,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['acao']) && $_POST['aca
     }
 }
 
-// Exibe mensagem da sessão (se existir) e limpa
+// Exibe mensagem da sessão(se existir) e limpa
 if (isset($_SESSION['mensagem'])) {
     $mensagem = $_SESSION['mensagem'];
     unset($_SESSION['mensagem']);
 }
 
-// === BUSCAR PROJETOS DA MESMA EMPRESA (através do criador) ===
+// Busca projetos da mesma empresa pelo criador
 $sqlProjetos = "
     SELECT p.idProjeto, p.nome 
     FROM Projeto p
@@ -79,7 +79,7 @@ $stmt = $pdo->prepare($sqlProjetos);
 $stmt->execute([':idEmpresa' => $idEmpresa]);
 $projetos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-// === BUSCAR ROTINAS DA EMPRESA DO USUÁRIO ===
+// Busca rotinas da empresa do usuário
 $sqlListagem = "
     SELECT r.*, p.nome AS nome_projeto, u.nome AS nome_criador
     FROM Rotina r

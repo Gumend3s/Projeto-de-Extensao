@@ -13,10 +13,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $stmt->execute([':email' => $email]);
     $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    // Verifica se usuário existe E se a senha bate com o hash
+    // Verifica se usuário existe e se a senha bate com o hash
     if ($usuario && $senha === $usuario['senhaHash']) {
 
-        // Verifica se o status é ATIVO
+        // Verifica se o status é ativo
         if ($usuario['status'] != 'ATIVO') {
             $erro = "Usuário bloqueado ou inativo.";
         } 

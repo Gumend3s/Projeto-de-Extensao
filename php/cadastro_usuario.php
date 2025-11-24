@@ -13,12 +13,12 @@ $idEmpresa = $_SESSION['idEmpresa'];
 $nivelUsuario = $_SESSION['nivel'];
 $mensagem = "";
 
-// Verifica se o usuário tem permissão (ADMIN ou MASTER)
+// Verifica se o usuário tem permissão ADMIN ou MASTER
 if ($nivelUsuario != 'ADMIN' && $nivelUsuario != 'MASTER') {
     $mensagem = "<div class='alert alert-danger'>Você não tem permissão para cadastrar usuários.</div>";
 }
 
-// === CADASTRO DE USUÁRIO ===
+// Cadasstro de usuário
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['acao']) && $_POST['acao'] == 'cadastrar_usuario') {
     
     if ($nivelUsuario == 'ADMIN' || $nivelUsuario == 'MASTER') {
@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['acao']) && $_POST['aca
                 throw new Exception("Todos os campos são obrigatórios.");
             }
 
-            // Valida CPF (remove caracteres especiais)
+            // Valida CPF
             $cpf = preg_replace('/[^0-9]/', '', $_POST['cpf']);
             if (strlen($cpf) != 11) {
                 throw new Exception("CPF inválido. Deve conter 11 dígitos.");
@@ -48,13 +48,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['acao']) && $_POST['aca
                 throw new Exception("E-mail já cadastrado no sistema.");
             }
 
-            // Validar senha (mínimo 6 caracteres)
+            // Validar senha de no mínimo 6 caracteres
             if (strlen($_POST['senha']) < 6) {
                 throw new Exception("A senha deve ter no mínimo 6 caracteres.");
             }
 
             // Hash da senha (compatível com seu login)
-            $senhaHash = $_POST['senha']; // Mantendo como texto simples conforme seu sistema atual
+            $senhaHash = $_POST['senha'];
 
             // Determina empresa e nível
             // ADMIN só pode cadastrar usuários na própria empresa
@@ -80,7 +80,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['acao']) && $_POST['aca
                 ':nivel'     => $nivel
             ]);
 
-            // Redireciona para evitar reenvio de formulário (padrão PRG)
+            // Redireciona para evitar reenvio de formulário padrão PRG(Post-Redirect-Get)
             $_SESSION['mensagem'] = "<div class='alert alert-success'>
                 <i class='fas fa-check-circle'></i> Usuário cadastrado com sucesso!
             </div>";
@@ -97,13 +97,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['acao']) && $_POST['aca
     }
 }
 
-// Exibe mensagem da sessão (se existir) e limpa
+// Exibe mensagem da sessão caso existir e limpa
 if (isset($_SESSION['mensagem'])) {
     $mensagem = $_SESSION['mensagem'];
     unset($_SESSION['mensagem']);
 }
 
-// === BUSCAR USUÁRIOS DA MESMA EMPRESA ===
+// Buscar usuários da mesma empresa
 $sqlUsuarios = "
     SELECT u.*, e.nome AS nome_empresa
     FROM Usuario u
