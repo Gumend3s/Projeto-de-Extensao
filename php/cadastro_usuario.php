@@ -80,19 +80,27 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['acao']) && $_POST['aca
                 ':nivel'     => $nivel
             ]);
 
-            $mensagem = "<div class='alert alert-success'>
+            // Redireciona para evitar reenvio de formulário (padrão PRG)
+            $_SESSION['mensagem'] = "<div class='alert alert-success'>
                 <i class='fas fa-check-circle'></i> Usuário cadastrado com sucesso!
             </div>";
-
-            // Limpa o formulário
-            $_POST = array();
+            header("Location: cadastro_usuario.php");
+            exit;
 
         } catch (Exception $e) {
-            $mensagem = "<div class='alert alert-danger'>
+            $_SESSION['mensagem'] = "<div class='alert alert-danger'>
                 <i class='fas fa-exclamation-circle'></i> Erro: " . $e->getMessage() . "
             </div>";
+            header("Location: cadastro_usuario.php");
+            exit;
         }
     }
+}
+
+// Exibe mensagem da sessão (se existir) e limpa
+if (isset($_SESSION['mensagem'])) {
+    $mensagem = $_SESSION['mensagem'];
+    unset($_SESSION['mensagem']);
 }
 
 // === BUSCAR USUÁRIOS DA MESMA EMPRESA ===

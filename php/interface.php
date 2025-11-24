@@ -29,9 +29,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['acao']) && $_POST['aca
             throw new Exception("Você não pode criar rotinas em projetos de outra empresa.");
         }
 
+        // Preparar dataLimite se preenchida
+        $dataLimite = null;
+        if (!empty($_POST['dataLimite']) && !empty($_POST['horaLimite'])) {
+            $dataLimite = $_POST['dataLimite'] . ' ' . $_POST['horaLimite'] . ':00';
+        }
+
         // Inserir rotina
-        $sql = "INSERT INTO Rotina (idProjeto, idCriador, nome, status, prioridade, recorrenciaRegra) 
-                VALUES (:idProjeto, :idCriador, :nome, :status, :prioridade, :recorrenciaRegra)";
+        $sql = "INSERT INTO Rotina (idProjeto, idCriador, nome, status, prioridade, recorrenciaRegra, dataLimite) 
+                VALUES (:idProjeto, :idCriador, :nome, :status, :prioridade, :recorrenciaRegra, :dataLimite)";
 
         $stmt = $pdo->prepare($sql);
         $stmt->execute([
@@ -40,14 +46,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['acao']) && $_POST['aca
             ':nome'           => $_POST['nome'],
             ':status'         => 'PENDENTE',
             ':prioridade'     => $_POST['prioridade'],
-            ':recorrenciaRegra' => $_POST['recorrencia']
+            ':recorrenciaRegra' => $_POST['recorrencia'],
+            ':dataLimite'     => $dataLimite
         ]);
 
-        $mensagem = "<div class='alert alert-success'>Rotina criada com sucesso!</div>";
+        // Redireciona para evitar reenvio de formulário (padrão PRG)
+        $_SESSION['mensagem'] = "<div class='alert alert-success'>Rotina criada com sucesso!</div>";
+        header("Location: interface.php");
+        exit;
 
     } catch (Exception $e) {
-        $mensagem = "<div class='alert alert-danger'>Erro ao criar rotina: " . $e->getMessage() . "</div>";
+        $_SESSION['mensagem'] = "<div class='alert alert-danger'>Erro ao criar rotina: " . $e->getMessage() . "</div>";
+        header("Location: interface.php");
+        exit;
     }
+}
+
+// Exibe mensagem da sessão (se existir) e limpa
+if (isset($_SESSION['mensagem'])) {
+    $mensagem = $_SESSION['mensagem'];
+    unset($_SESSION['mensagem']);
 }
 
 // === BUSCAR PROJETOS DA MESMA EMPRESA (através do criador) ===
@@ -83,6 +101,18 @@ $rotinas = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <title>Gestão de Rotinas</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .table td {
+            vertical-align: middle;
+        }
+        .prazo-vencido {
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+    </style>
 </head>
 <body class="bg-light">
 
@@ -153,6 +183,17 @@ $rotinas = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         </div>
 
                         <div class="mb-3">
+                            <label class="form-label">Data Limite</label>
+                            <input type="date" name="dataLimite" class="form-control">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Hora Limite</label>
+                            <input type="time" name="horaLimite" class="form-control">
+                            <small class="text-muted">Opcional - defina o prazo final</small>
+                        </div>
+
+                        <div class="mb-3">
                             <label class="form-label">Regra de Recorrência</label>
                             <input type="text" name="recorrencia" class="form-control" placeholder="Ex: Diariamente, Segunda a Sexta">
                         </div>
@@ -182,6 +223,7 @@ $rotinas = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 <th>Projeto</th>
                                 <th>Criador</th>
                                 <th>Prioridade</th>
+                                <th>Prazo</th>
                                 <th>Status</th>
                             </tr>
                         </thead>
@@ -206,12 +248,41 @@ $rotinas = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                         <span class="badge <?= $class ?>"><?= $r['prioridade'] ?></span>
                                     </td>
 
+                                    <td>
+                                        <?php if ($r['dataLimite']): ?>
+                                            <?php 
+                                                $dataLimite = new DateTime($r['dataLimite']);
+                                                $agora = new DateTime();
+                                                $diff = $agora->diff($dataLimite);
+                                                $diasRestantes = ($dataLimite > $agora) ? $diff->days : -$diff->days;
+                                                
+                                                // Define cor baseado no prazo
+                                                if ($diasRestantes < 0) {
+                                                    $prazoClass = 'text-danger fw-bold';
+                                                    $prazoIcon = 'fa-exclamation-triangle';
+                                                } elseif ($diasRestantes <= 2) {
+                                                    $prazoClass = 'text-warning fw-bold';
+                                                    $prazoIcon = 'fa-clock';
+                                                } else {
+                                                    $prazoClass = 'text-muted';
+                                                    $prazoIcon = 'fa-calendar';
+                                                }
+                                            ?>
+                                            <small class="<?= $prazoClass ?>">
+                                                <i class="fas <?= $prazoIcon ?> me-1"></i>
+                                                <?= $dataLimite->format('d/m/Y H:i') ?>
+                                            </small>
+                                        <?php else: ?>
+                                            <small class="text-muted">Sem prazo</small>
+                                        <?php endif; ?>
+                                    </td>
+
                                     <td><span class="badge bg-info"><?= $r['status'] ?></span></td>
                                 </tr>
                             <?php endforeach; ?>
                         <?php else: ?>
                             <tr>
-                                <td colspan="6" class="text-center py-4 text-muted">
+                                <td colspan="7" class="text-center py-4 text-muted">
                                     Nenhuma rotina encontrada.
                                 </td>
                             </tr>

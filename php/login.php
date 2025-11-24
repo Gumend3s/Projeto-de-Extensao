@@ -19,8 +19,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // Verifica se o status é ATIVO
         if ($usuario['status'] != 'ATIVO') {
             $erro = "Usuário bloqueado ou inativo.";
-        } else {
-
+        } 
+        // Verifica se o nível é permitido (apenas ADMIN e MASTER)
+        elseif ($usuario['nivel'] == 'FUNCIONARIO') {
+            $erro = "Acesso negado. Apenas administradores podem fazer login.";
+        } 
+        else {
             // Salva dados na sessão
             $_SESSION['idUsuario'] = $usuario['idUsuario'];
             $_SESSION['nome'] = $usuario['nome'];
