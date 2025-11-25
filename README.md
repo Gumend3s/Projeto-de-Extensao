@@ -168,10 +168,6 @@ Cada método corresponde diretamente às operações necessárias para cumprir o
 
 # 4. Diagramas de Caso de Uso — Explicação
 
-Você enviou vários casos de uso, cada um detalhando as permissões:
-
----
-
 ## **Gerenciamento de Empresas**
 
 Atores:
@@ -260,10 +256,6 @@ Inclui tratamento de:
 ---
 
 # 6. Diagramas de Atividade — Fluxos Operacionais
-
-Você enviou diagramas detalhados para:
-
----
 
 ## Login
 
@@ -532,11 +524,7 @@ O SQL usa:
   * rotina ↔ tag
   * projeto → rotina
 
-Isso garante consistência e segue exatamente o modelo do seu diagrama ER.
-
 ---
-
-Agora preciso apenas dos códigos para completar esta seção:
 
 # **10.  Funções PHP e Arquitetura Backend**
 
