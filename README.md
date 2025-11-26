@@ -41,7 +41,7 @@ Esses modelos contribuem para uma documentação completa e facilitam futuras ma
 
 Abaixo está o **Diagrama de Classes** e a descrição técnica das classes, atributos, métodos e relacionamentos extraídos do diagrama.
 
-![Diagrama de Classes](./img/DiagramaClasse.png)
+![Diagrama de Classes](/img/DiagramaClasse.png)
 
 ---
 
@@ -236,7 +236,7 @@ Esse fluxo garante que apenas usuários com **dados corretos e válidos** possam
 
 ### **Imagem do Diagrama**
 
-![Diagrama de Atividade — Login](./img/DiagramaAtividade-1.png)
+![Diagrama de Atividade — Login](/img/DiagramaAtividade-1.png)
 
 ---
 
@@ -318,7 +318,7 @@ Essa separação deixa claro o resultado final do processo.
 
 ### **Imagem do Diagrama**
 
-![Diagrama de Atividade — Criação/Edição de Usuário](./img/DiagramaAtividade-2.png)
+![Diagrama de Atividade — Criação/Edição de Usuário](/img/DiagramaAtividade-2.png)
 
 ---
 
@@ -439,7 +439,7 @@ O objetivo do fluxo é garantir que gestores ou administradores possam cadastrar
 
 ### **Imagem do Diagrama**
 
-![Diagrama de Atividade — Criação/Edição de Empresa](./img/DiagramaAtividade-3.png)
+![Diagrama de Atividade — Criação/Edição de Empresa](/img/DiagramaAtividade-3.png)
 
 ---
 
@@ -578,7 +578,7 @@ O fluxo termina após a confirmação, finalizando com sucesso tanto a criação
 
 ### **Imagem do Diagrama**
 
-![Diagrama de Atividade — Criação/Edição de Rotina](./img/DiagramaAtividade-4.png)
+![Diagrama de Atividade — Criação/Edição de Rotina](/img/DiagramaAtividade-4.png)
 
 ---
 
@@ -818,7 +818,7 @@ O fluxo se encerra após a confirmação, finalizando a operação com sucesso.
 
 ### **Imagem do Diagrama**
 
-![Diagrama de Atividade — Concluir Rotina](./img/DiagramaAtividade-5.png)
+![Diagrama de Atividade — Concluir Rotina](/img/DiagramaAtividade-5.png)
 
 ---
 
@@ -883,7 +883,7 @@ Fluxo finalizado — rotina concluída e auditoria registrada.
 
 ### **Imagem do Diagrama**
 
-![Diagrama de Sequência — Gerenciamento de Rotina](./img/DiagramaSequencia-1.png)
+![Diagrama de Sequência — Gerenciamento de Rotina](/img/DiagramaSequencia-1.png)
 
 ---
 
@@ -990,7 +990,7 @@ Em caso de sucesso, o sistema pode ainda acionar mecanismos adicionais como:
 
 ## **Imagem do Diagrama**
 
-![Diagrama de Sequência — Gerenciamento de Rotina](./img/CasoUso-1.png)
+![Diagrama de Sequência — Gerenciamento de Rotina](/img/CasoUso-1.png)
 
 ---
 
@@ -1083,3 +1083,623 @@ Os atores **MASTER** e **Administrador** possuem permissão para executar essas 
 * Todas as ações executadas geram registro de auditoria no sistema.
 
 ---
+
+# **Caso de Uso — Gerenciamento de Usuários**
+
+## **Imagem do Diagrama**
+
+![Caso de Uso – Gerenciamento de Usuários](/img/CasoUso-2.png)
+
+---
+
+## **Descrição do Caso de Uso**
+
+### **I. Visão Geral**
+
+O módulo **Gerenciamento de Usuários** permite que atores com privilégios administrativos — **MASTER** e **Administrador** — realizem operações de cadastro, busca e manutenção de usuários dentro do sistema.
+Ele é essencial para controlar quem pode acessar o sistema, quais permissões cada um possui e como cada usuário se relaciona com empresas e rotinas.
+
+---
+
+## **II. Atores Envolvidos**
+
+### **II.1. MASTER**
+
+* Permissão total sobre usuários.
+* Pode criar, pesquisar, editar, redefinir status e alterar níveis de acesso.
+
+### **II.2. Administrador**
+
+* Pode realizar operações de cadastro, pesquisa e manutenção de usuários, exceto ações críticas que dependem exclusivamente do MASTER (como redefinir nível para MASTER, suspensão total etc.).
+
+---
+
+## **III. Casos de Uso**
+
+---
+
+### **III.A — Cadastrar Usuário**
+
+**Objetivo:** Criar um novo usuário no sistema, definindo seus dados pessoais e nível de acesso.
+
+**Fluxo Principal:**
+
+1. O ator acessa o módulo e seleciona **Cadastrar Usuário**.
+2. O sistema exibe o formulário com campos como nome, e-mail, CPF, empresa e nível.
+3. O ator preenche as informações.
+4. O sistema valida dados obrigatórios, formato e duplicidade (ex.: e-mail já existente).
+5. Caso tudo esteja correto, o usuário é salvo no banco de dados.
+6. O sistema confirma a criação e exibe mensagem de sucesso.
+
+**Fluxos Alternativos:**
+
+* E-mail/CPF duplicado → bloqueia cadastro.
+* Dados inválidos → exibe erros no formulário.
+* Permissão insuficiente → nega ação.
+
+---
+
+### **III.B — Pesquisar Usuário**
+
+**Objetivo:** Permitir filtrar e localizar usuários cadastrados no sistema.
+
+**Fluxo Principal:**
+
+1. O ator acessa **Pesquisar Usuário**.
+2. Informa filtros como nome, e-mail, CPF, empresa ou status.
+3. O sistema retorna lista dos usuários que correspondem à busca.
+4. O ator seleciona um usuário para visualizar ou editar.
+
+**Fluxos Alternativos:**
+
+* Nenhum resultado encontrado → sistema informa.
+* Filtros incompletos (se a regra exigir) → solicitar definição melhor.
+
+---
+
+### **III.C — Manter Usuário (extends Pesquisar Usuário)**
+
+**Objetivo:** Atualizar dados de um usuário existente.
+
+**Fluxo Principal:**
+
+1. Após localizar o usuário, o ator seleciona **Manter Usuário**.
+2. O sistema exibe os dados atuais (nome, e-mail, status, nível etc.).
+3. O ator edita os campos desejados.
+4. O sistema valida e salva as alterações.
+5. Exibe mensagem de sucesso e registra auditoria.
+
+**Fluxos Alternativos:**
+
+* Tentativa de editar usuário inexistente → erro.
+* Alterações inválidas (e-mail já usado, CPF incompatível) → erro.
+* Ações de alto risco (como mudar nível para MASTER) podem exigir confirmação especial.
+
+---
+
+## **IV. Observações Importantes**
+
+* O caso **Manter Usuário** depende da busca, por isso está ligado como **extends** a **Pesquisar Usuário**.
+* O MASTER pode editar qualquer usuário; o Administrador pode estar limitado a usuários da mesma empresa.
+* Toda alteração deve gerar log no sistema para fins de rastreamento.
+
+---
+
+# **Caso de Uso — Login e Acesso ao Sistema**
+
+## **Imagem do Diagrama**
+>
+![Caso de Uso – Login](/img/CasoUso-3.png)
+
+---
+
+## **Descrição do Caso de Uso**
+
+### **I. Visão Geral**
+
+O módulo **Login** reúne as funcionalidades fundamentais de autenticação e manutenção de sessão dentro do sistema.
+Ele é acessado por todos os perfis — **MASTER**, **Administrador** e **Funcionário** — representando o ponto inicial para utilização do sistema e o gerenciamento da credencial do usuário.
+
+As funcionalidades incluídas são:
+
+* **Login**
+* **Logout**
+* **Trocar Senha**
+  Sendo que **Logout** e **Trocar Senha** dependem do usuário estar autenticado, e o caso “Login” é o ponto inicial para todos.
+
+---
+
+## **II. Atores Envolvidos**
+
+### **II.1. MASTER**
+
+Possui acesso ao login e todas as ações posteriores. Pode redefinir sua própria senha e sai da sessão via logout.
+
+### **II.2. Administrador**
+
+Autentica-se para acessar ações administrativas do sistema e também pode trocar sua senha e encerrar sessão.
+
+### **II.3. Funcionário**
+
+Realiza login para acessar suas rotinas, concluir ações e interagir com atividades delegadas. Também pode trocar senha e encerrar a sessão.
+
+---
+
+## **III. Casos de Uso**
+
+---
+
+### **III.A — Login**
+
+**Objetivo:** Autenticar o usuário no sistema permitindo acesso às funcionalidades internas.
+
+**Fluxo Principal:**
+
+1. O usuário acessa a tela inicial e escolhe **Login**.
+2. O sistema solicita usuário/e-mail e senha.
+3. O usuário informa as credenciais.
+4. O sistema valida os dados (autenticação).
+5. Em caso de sucesso, a sessão é iniciada e o usuário é direcionado à página principal apropriada ao seu nível.
+
+**Fluxos Alternativos:**
+
+* Credenciais inválidas → sistema exibe erro e permite tentar novamente.
+* Usuário bloqueado/inativo → acesso negado.
+* Regras adicionais podem ser aplicadas (ex.: autenticação de dois fatores).
+
+---
+
+### **III.B — Logout (extends Login)**
+
+**Objetivo:** Encerrar a sessão do usuário de forma segura.
+
+**Fluxo Principal:**
+
+1. Usuário já autenticado seleciona **Logout**.
+2. O sistema invalida o token/sessão atual.
+3. O usuário é redirecionado para a tela de Login.
+
+**Fluxos Alternativos:**
+
+* Sessão expirada → o sistema força logout automaticamente e exibe aviso.
+
+---
+
+### **III.C — Trocar Senha**
+
+**Objetivo:** Permitir ao usuário alterar sua própria senha por segurança ou atualização de credenciais.
+
+**Fluxo Principal:**
+
+1. O usuário acessa a opção **Trocar Senha**.
+2. O sistema exibe os campos: senha atual, nova senha e confirmação.
+3. O usuário informa os dados.
+4. O sistema valida:
+
+   * senha atual correta,
+   * regras de complexidade,
+   * correspondência da confirmação.
+5. Senha atualizada com sucesso; mensagem exibida.
+
+**Fluxos Alternativos:**
+
+* Senha atual incorreta → erro.
+* Nova senha inválida (complexidade mínima) → erro.
+* Duas senhas não coincidem → erro.
+
+---
+
+## **IV. Observações Importantes**
+
+* Todos os atores do sistema compartilham o caso de uso **Login**, pois ele é obrigatório para acesso ao sistema.
+* **Logout** depende de uma sessão válida, por isso aparece como extensão após o login.
+* **Trocar Senha** pode ser acessado tanto pelo usuário logado quanto em fluxos especiais (recuperação de senha), dependendo da implementação.
+* A segurança deste módulo é fundamental, pois controla o acesso geral do sistema.
+
+---
+
+# **Caso de Uso — Execução de Rotinas**
+
+## **Imagem do Diagrama**
+
+![Caso de Uso – Execução de Rotinas](/img/CasoUso-4.png)
+
+---
+
+## **Descrição do Caso de Uso**
+
+### **I. Visão Geral**
+
+O módulo **Execução de Rotinas** descreve como o **Funcionário** interage com as rotinas que lhe foram atribuídas.
+Ele engloba ações como visualizar rotinas recebidas, abrir rotinas específicas e executar atividades internas (concluir ações e fechar rotinas).
+Esse módulo representa o fluxo principal de trabalho do usuário que executa tarefas no dia a dia.
+
+---
+
+## **II. Ator Envolvido**
+
+### **II.1. Funcionário**
+
+É o ator responsável por receber, abrir e executar rotinas.
+Ele não cria rotinas — apenas interage com aquelas delegadas a ele pelo gerente ou administrador.
+
+---
+
+## **III. Casos de Uso**
+
+---
+
+### **III.A — Visualizar Rotinas Recebidas**
+
+**Objetivo:** Permitir que o funcionário veja todas as rotinas delegadas para ele.
+
+**Fluxo Principal:**
+
+1. O funcionário acessa a opção **Visualizar Rotinas Recebidas**.
+2. O sistema exibe uma lista com todas as rotinas atribuídas, com informações como status, prioridade, prazo e progresso.
+3. O funcionário seleciona uma rotina para abrir.
+
+**Fluxos Alternativos:**
+
+* Nenhuma rotina atribuída → o sistema informa que não há tarefas pendentes.
+* Filtros opcionais podem ser utilizados (prioridade, data, projeto, tags).
+
+---
+
+### **III.B — Abrir Rotina**
+
+**Objetivo:** Acessar o conteúdo e as ações internas de uma rotina específica.
+
+**Fluxo Principal:**
+
+1. O funcionário seleciona uma rotina da lista.
+2. O sistema carrega os detalhes: descrição, ações, status atual, horários e histórico.
+3. A partir daqui, o funcionário pode:
+
+   * Executar ações
+   * Acompanhar progresso
+   * Concluir ações
+   * Fechar a rotina quando terminar tudo
+
+Esse caso de uso serve como ponto central, pois todos os demais se conectam a ele.
+
+---
+
+### **III.C — Concluir Ação (extends Abrir Rotina)**
+
+**Objetivo:** Registrar que uma ação interna da rotina foi realizada.
+
+**Fluxo Principal:**
+
+1. Dentro da rotina aberta, o funcionário escolhe uma ação pendente.
+2. O sistema exibe detalhes (observações, instruções, subtarefas).
+3. O funcionário marca a ação como concluída.
+4. O sistema atualiza o status da ação e associa o registro de conclusão ao funcionário.
+
+**Fluxos Alternativos:**
+
+* Ação já concluída → sistema impede duplicidade.
+* Informações obrigatórias (ex.: evidências) podem ser solicitadas dependendo da regra.
+
+---
+
+### **III.D — Fechar Rotina (extends Abrir Rotina)**
+
+**Objetivo:** Encerrar oficialmente a rotina após todas as ações estarem concluídas.
+
+**Fluxo Principal:**
+
+1. Depois que todas as ações estiverem finalizadas, o funcionário escolhe **Fechar Rotina**.
+2. O sistema verifica se realmente não há ações pendentes.
+3. Caso tudo esteja concluído, a rotina é marcada como **Concluída**.
+4. O sistema registra a finalização e atualiza dashboards e relatórios.
+
+**Fluxos Alternativos:**
+
+* Se houver ações pendentes → o sistema bloqueia o fechamento e informa quais tarefas ainda faltam.
+* Se a rotina estiver atrasada, o sistema pode registrar automaticamente indicadores de atraso.
+
+---
+
+## **IV. Observações Importantes**
+
+* O caso **Abrir Rotina** é o núcleo do módulo. Por isso, **Concluir Ação** e **Fechar Rotina** aparecem como *extends*, já que dependem da rotina estar aberta.
+* A execução de rotinas é um processo cíclico: visualizar → abrir → concluir ações → fechar.
+* Toda ação executada pelo funcionário gera eventos de auditoria e atualiza o progresso da rotina.
+* Esse módulo normalmente aparece muito no dashboard do funcionário, pois representa sua rotina diária.
+
+---
+
+# **Modelo do Banco de Dados**
+
+## **Imagem do Modelo**
+
+
+![Modelo de Banco de Dados](/img/ModeloBanco.png)
+
+---
+
+## **Descrição Geral**
+
+O modelo representa o domínio do **Gerenciador de Rotinas**: usuários, empresas, projetos, rotinas, ações, tags e as relações de delegação e categorização. As relações principais são:
+
+* `Empresa` → `Usuario` (uma empresa tem vários usuários)
+* `Projeto` → `Rotina` (um projeto contém várias rotinas)
+* `Rotina` → `Acao` (uma rotina é composta por várias ações)
+* `Rotina` ↔ `Tag` (relação N:N via tabela associativa `RotinaTag`)
+* `Rotina` ↔ `Usuario` (delegação: N:N com atributos via `DelegacaoRotina`)
+* Logs de sistema capturam eventos relacionados a usuários/ações
+
+Abaixo, a documentação por entidade, com os atributos relevantes, chaves e regras de relacionamento.
+
+---
+
+### **I. Tabela: Empresa**
+
+**Propósito:** representa as empresas/organizações que agrupam usuários, projetos e rotinas.
+
+**Atributos principais**
+
+* `id_empresa` (PK, integer, auto-increment)
+* `nome` (varchar)
+* `email` (varchar) — contato administrativo
+* `data_hora_entrada` (timestamp) — quando a empresa foi criada/registrada
+* *(opcionais sugeridos)* `cnpj` (varchar, único), `telefone`, `endereco`
+
+**Regras & índices**
+
+* `cnpj` recomendado como `UNIQUE` se usado no negócio.
+* índice em `nome` para busca.
+
+**Relacionamentos**
+
+* 1 `Empresa` — N `Usuario` (FK `usuario.id_empresa` → `empresa.id_empresa`)
+
+---
+
+### **II. Tabela: Usuario**
+
+**Propósito:** representa contas (MASTER, ADMIN, FUNCIONARIO).
+
+**Atributos principais**
+
+* `id_usuario` (PK)
+* `nome` (varchar)
+* `cpf` (varchar) — identificador (opcional dependendo do país)
+* `email` (varchar) — `UNIQUE` recomendado
+* `senha_hash` (varchar)
+* `role` / `nivel` (enum: `MASTER`, `ADMIN`, `FUNCIONARIO`)
+* `status` (enum: `ATIVO`, `INATIVO`, `BLOQUEADO`)
+* `data_hora_entrada` (timestamp)
+* `id_empresa` (FK → `empresa.id_empresa`)
+* `segredo_2fa` (varchar, nullable) — para 2FA
+
+**Regras & índices**
+
+* `email` e `cpf` devem ter índices/constraints de unicidade dependendo da política.
+* índice composto possível: `(id_empresa, email)` se e-mail só for único por empresa.
+* armazenar `senha_hash` (nunca armazenar senha em plain text).
+
+**Relacionamentos**
+
+* N `Usuario` pertence a 1 `Empresa`.
+* 1 `Usuario` cria (FK) `Projeto`, `Rotina`, `Acao`, `Tag` (campo `id_criador` nas respectivas tabelas).
+* `Usuario` participa da relação de delegação (`DelegacaoRotina`).
+
+---
+
+### **III. Tabela: Projeto**
+
+**Propósito:** agrupar rotinas por iniciativa, time, ou escopo.
+
+**Atributos principais**
+
+* `id_projeto` (PK)
+* `nome` (varchar)
+* `id_criador` (FK → `usuario.id_usuario`)
+* `status` (opcional: ativo/inativo)
+* timestamps (`created_at`, `updated_at`)
+
+**Regras & índices**
+
+* índice em `nome` para busca.
+* checar `id_criador` válido.
+
+**Relacionamentos**
+
+* 1 `Projeto` — N `Rotina` (`rotina.id_projeto` → `projeto.id_projeto`).
+* `Projeto` pode ser obrigatório ou opcional para `Rotina` (no modelo aparece `0..1`).
+
+---
+
+### **IV. Tabela: Rotina**
+
+**Propósito:** entidade central que descreve uma rotina de trabalho.
+
+**Atributos principais**
+
+* `id_rotina` (PK)
+* `nome` / `titulo` (varchar)
+* `data_hora_criacao` (timestamp)
+* `data_conclusao` (date / timestamp nullable)
+* `hora_conclusao` (time nullable)
+* `recorrente` (boolean)
+* `recorrencia_regra` (varchar/json) — regra/cron para recorrência
+* `status` (enum: `PENDENTE`, `EM_EXECUCAO`, `CONCLUIDA`, `CANCELADA`)
+* `prioridade` (enum: `BAIXA`, `MEDIA`, `ALTA`)
+* `id_criador` (FK → `usuario.id_usuario`)
+* `id_projeto` (FK → `projeto.id_projeto`, nullable)
+* `ultima_modificacao` (timestamp)
+* `data_limite` (timestamp / date nullable)
+
+**Regras & índices**
+
+* índice em `status`, `data_limite` para consultas frequentes.
+* `recorrencia_regra` pode ser JSON para flexibilidade (ex.: `{ type: "weekly", every: 1, days: ["Mon"] }`).
+
+**Relacionamentos**
+
+* 1 `Rotina` — N `Acao` (`acao.id_rotina` → `rotina.id_rotina`) (composição: ações fazem parte da rotina).
+* `Rotina` — N `Tag` (via `RotinaTag`) (N:N).
+* `Rotina` — N `DelegacaoRotina` (várias delegações a usuários).
+* `Rotina` pertence opcionalmente a 1 `Projeto`.
+* `id_criador` aponta para `Usuario` que criou a rotina.
+
+---
+
+### **V. Tabela: Acao**
+
+**Propósito:** tarefas atômicas que compõem uma rotina.
+
+**Atributos principais**
+
+* `id_acao` (PK)
+* `nome` (varchar)
+* `id_rotina` (FK → `rotina.id_rotina`)
+* `id_criador` (FK → `usuario.id_usuario`)
+* `data_hora_criacao` (timestamp)
+* `hora_conclusao` (time / timestamp nullable)
+* `status` (enum: `PENDENTE`, `EM_EXECUCAO`, `CONCLUIDA`)
+* `definicao_conclusao` (text) — evidências / critérios
+* `ultima_modificacao` (timestamp)
+* `ordem` (int) — posição sequencial dentro da rotina
+* `tempo_estimado_min` (integer) — estimativa
+
+**Regras & índices**
+
+* índice por `id_rotina` para recuperar ações por rotina ordenadas por `ordem`.
+* restrição: não permitir remoção de ações já concluídas (ou fazer soft delete).
+
+**Relacionamentos**
+
+* N `Acao` pertence a 1 `Rotina`.
+* `Acao.id_criador` referencia `Usuario`.
+
+---
+
+### **VI. Tabela: Tag**
+
+**Propósito:** classificar rotinas por categorias livres.
+
+**Atributos principais**
+
+* `id_tag` (PK)
+* `nome` (varchar)
+* `cor` (varchar — hex / nome)
+* `id_criador` (FK → `usuario.id_usuario`)
+* timestamps
+
+**Regras & índices**
+
+* `nome` pode ser `UNIQUE` por empresa/escopo (ou global), dependendo do requisito.
+* índice em `nome` para busca.
+
+**Relacionamentos**
+
+* N `Tag` ↔ N `Rotina` via `RotinaTag` (table associativa).
+
+---
+
+### **VII. Tabela: RotinaTag** (associativa)
+
+**Propósito:** representa a relação N:N entre `Rotina` e `Tag`.
+
+**Atributos principais**
+
+* `id_rotina` (PK parcial, FK → `rotina.id_rotina`)
+* `id_tag` (PK parcial, FK → `tag.id_tag`)
+* (opcionais) `criado_em`, `criado_por` — histórico
+
+**Regras**
+
+* PK composta (`id_rotina`, `id_tag`) para evitar duplicatas.
+* Índice secundário por `id_tag` para buscar rotinas por tag.
+
+---
+
+### **VIII. Tabela: DelegacaoRotina** (ou `Delega`)
+
+**Propósito:** modela a delegação de uma rotina a um funcionário — relação N:N entre `Rotina` e `Usuario` com atributos (status do progresso, % conclusão).
+
+**Atributos principais**
+
+* `id_delegacao` (PK, integer) — opcional; ou PK composta (`id_rotina`, `id_usuario`)
+* `id_rotina` (FK → `rotina.id_rotina`)
+* `id_funcionario` / `id_usuario` (FK → `usuario.id_usuario`)
+* `status_progresso` (enum: `NAO_INICIADO`, `EM_ANDAMENTO`, `CONCLUIDO`)
+* `progresso_percentual` (float / decimal)
+* `criado_em` (timestamp)
+* `atribuido_por` (FK → `usuario.id_usuario`) — quem delegou (opcional)
+
+**Regras & índices**
+
+* PK composta (`id_rotina`, `id_usuario`) evita duplicar delegações.
+* validar `progresso_percentual` entre 0 e 100.
+* índice por `id_usuario` para recuperar delegações por funcionário.
+
+**Relacionamentos**
+
+* `Rotina` ↔ `Usuario` via `DelegacaoRotina` (N:N com atributos).
+
+---
+
+### **IX. Tabela: LogSistema**
+
+**Propósito:** armazenar eventos e auditoria de sistema.
+
+**Atributos principais**
+
+* `id_log` (PK)
+* `nivel` (enum: `INFO`, `ALERTA`, `ERRO`)
+* `mensagem` (text)
+* `contexto` (longtext/json) — detalhes adicionais (payload, stacktrace)
+* `id_usuario_relacionado` (FK → `usuario.id_usuario`, nullable)
+* `timestamp` (timestamp)
+
+**Regras**
+
+* gravar logs de eventos importantes (criação/edição/exclusão/erros).
+
+---
+
+## **X. Resumo dos Principais Relacionamentos (cardinalidades)**
+
+1. **Empresa (1) — (N) Usuario**
+
+   * Uma empresa tem vários usuários; usuário pertence a uma empresa.
+
+2. **Usuario (1) — (N) Projeto / Rotina / Acao / Tag (como criador)**
+
+   * Usuários são autores/gestores dos recursos (campo `id_criador`).
+
+3. **Projeto (1) — (N) Rotina**
+
+   * Um projeto agrupa várias rotinas; associação opcional em rotinas.
+
+4. **Rotina (1) — (N) Acao**
+
+   * Rotina composta por ações; exclusão de rotina deve cascatar ou exigir exclusão/arquivamento de ações.
+
+5. **Rotina (N) — (N) Tag** (via `RotinaTag`)
+
+   * Permite categorização flexível.
+
+6. **Rotina (N) — (N) Usuario** (via `DelegacaoRotina`, com atributos)
+
+   * Delegações possuem `status_progresso` e `progresso_percentual`.
+
+7. **Rotina** — `Log` (eventos) / `Delegacao` / `RotinaTag` — entidades auxiliares que adicionam informações relacionais e de histórico.
+
+---
+
+## **XI. Boas práticas / recomendações de implementação**
+
+* **Chaves e FKs:** definir FKs com `ON DELETE RESTRICT` para evitar exclusões acidentais; em alguns casos usar `ON DELETE CASCADE` (ex.: ao remover rotina, remover `acao` ou marcar soft-delete).
+* **Soft delete:** preferir `deleted_at` (timestamp) para preservar histórico e integridade referencial.
+* **Auditoria:** manter campos `created_by`, `created_at`, `updated_by`, `updated_at` em todas as tabelas críticas.
+* **Índices:** colocar índices em colunas frequentemente filtradas: `status`, `data_limite`, `id_projeto`, `id_usuario` (em delegações).
+* **Consistência em concorrência:** usar **optimistic locking** (`version` ou `ultima_modificacao`) nas entidades editáveis (Rotina, Acao).
+* **Normalização:** modelo atual está normalizado; se precisar otimizar leitura (dashboards), considerar tabelas de agregação ou materialized views.
+* **Tipos e tamanhos:** escolher tipos apropriados (timestamp with timezone se necessário; integers para ids; varchar com limites razoáveis).
+* **Validações de negócio:** impor unicidade onde fizer sentido (`email`, `cpf`, `cnpj`) e regras de domínio (ex.: rotina concluída requer todas ações concluídas).
+
