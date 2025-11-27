@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 23/11/2025 às 20:50
+-- Tempo de geração: 27/11/2025 às 21:53
 -- Versão do servidor: 10.4.32-MariaDB
--- Versão do PHP: 8.0.30
+-- Versão do PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Banco de dados: `teste`
+-- Banco de dados: `trabalhoextensao2`
 --
 
 -- --------------------------------------------------------
@@ -44,11 +44,24 @@ CREATE TABLE `acao` (
 --
 
 INSERT INTO `acao` (`idAcao`, `idRotina`, `idCriador`, `nome`, `definicaoConclusao`, `dataHoraCriacao`, `horaConclusao`, `status`, `ultimaModificacao`) VALUES
-(1, 1, 1, 'Verificar logs de erro', 'Logs devem estar vazios ou justificados', '2024-01-20 08:05:00', '23:15:00', 'PENDENTE', '2024-11-23 02:15:00'),
-(2, 1, 1, 'Upload para S3', 'Arquivo .dump deve estar no bucket', '2024-01-20 08:05:00', '23:30:00', 'PENDENTE', '2024-11-23 02:30:00'),
-(3, 2, 1, 'Atualizar Quadro Kanban', 'Mover cards feitos ontem', '2024-02-01 08:35:00', '09:15:00', 'CONCLUIDA', '2024-10-15 12:15:00'),
-(4, 3, 2, 'Escrever Draft do E-mail', 'Texto aprovado pelo marketing', '2024-02-10 14:05:00', '09:30:00', 'CONCLUIDA', '2024-11-20 12:30:00'),
-(5, 5, 4, 'Lubrificar Eixos X e Y', 'Utilizar óleo sintético tipo A', '2024-11-01 07:05:00', '07:00:00', 'PENDENTE', '2024-11-01 10:05:00');
+(1, 1, 1, 'Executar script de backup', 'Rodar script no servidor principal', '2025-11-27 17:50:23', '22:30:00', 'PENDENTE', '2025-11-27 20:50:23'),
+(2, 1, 1, 'Verificar integridade dos arquivos', 'Checar logs de backup', '2025-11-27 17:50:23', '22:45:00', 'PENDENTE', '2025-11-27 20:50:23'),
+(3, 2, 2, 'Gerar relatório financeiro', 'Exportar dados do ERP', '2025-11-27 17:50:23', '17:00:00', 'PENDENTE', '2025-11-27 20:50:23'),
+(4, 2, 2, 'Enviar relatório ao gestor', 'Enviar por e-mail ao Master', '2025-11-27 17:50:23', '17:30:00', 'PENDENTE', '2025-11-27 20:50:23'),
+(5, 3, 4, 'Atualizar preços', 'Inserir novos valores no sistema', '2025-11-27 17:50:23', NULL, 'PENDENTE', '2025-11-27 20:50:23'),
+(6, 3, 4, 'Revisar catálogo', 'Checar consistência dos dados', '2025-11-27 17:50:23', NULL, 'PENDENTE', '2025-11-27 20:50:23'),
+(7, 4, 1, 'Revisar logs de acesso', 'Checar registros de login e logout', '2025-11-27 17:50:23', '14:00:00', 'PENDENTE', '2025-11-27 20:50:23'),
+(8, 4, 1, 'Emitir relatório de auditoria', 'Gerar documento com achados', '2025-11-27 17:50:23', '15:00:00', 'PENDENTE', '2025-11-27 20:50:23'),
+(9, 5, 2, 'Preparar material de treinamento', 'Criar slides e apostilas', '2025-11-27 17:50:23', NULL, 'PENDENTE', '2025-11-27 20:50:23'),
+(10, 5, 2, 'Agendar sala de reunião', 'Reservar espaço físico', '2025-11-27 17:50:23', NULL, 'PENDENTE', '2025-11-27 20:50:23'),
+(11, 6, 4, 'Criar peças publicitárias', 'Design de banners e posts', '2025-11-27 17:50:23', NULL, 'PENDENTE', '2025-11-27 20:50:23'),
+(12, 6, 4, 'Planejar cronograma de posts', 'Definir datas de publicação', '2025-11-27 17:50:23', NULL, 'PENDENTE', '2025-11-27 20:50:23'),
+(13, 7, 1, 'Testar firewall', 'Executar testes de vulnerabilidade', '2025-11-27 17:50:23', '09:00:00', 'PENDENTE', '2025-11-27 20:50:23'),
+(14, 7, 1, 'Atualizar senhas administrativas', 'Trocar credenciais críticas', '2025-11-27 17:50:23', '09:30:00', 'PENDENTE', '2025-11-27 20:50:23'),
+(15, 1, 1, 'Enviar relatório de backup', 'Enviar relatório automático para o administrador', '2025-11-27 17:51:58', '23:00:00', 'PENDENTE', '2025-11-27 20:51:58'),
+(18, 4, 1, 'Revisar permissões de usuários', 'Checar se níveis de acesso estão corretos', '2025-11-27 17:51:58', '14:30:00', 'PENDENTE', '2025-11-27 20:51:58'),
+(20, 6, 4, 'Definir orçamento da campanha', 'Aprovar valores com diretoria', '2025-11-27 17:51:58', NULL, 'PENDENTE', '2025-11-27 20:51:58'),
+(21, 6, 4, 'Monitorar engajamento inicial', 'Checar métricas após primeira semana', '2025-11-27 17:51:58', NULL, 'PENDENTE', '2025-11-27 20:51:58');
 
 -- --------------------------------------------------------
 
@@ -69,11 +82,13 @@ CREATE TABLE `delegacaorotina` (
 --
 
 INSERT INTO `delegacaorotina` (`idDelegacao`, `idRotina`, `idFuncionario`, `statusProgresso`, `progressoPercentual`) VALUES
-(1, 1, 2, 'EM_ANDAMENTO', 50),
-(2, 2, 3, 'NAO_INICIADO', 0),
-(3, 3, 2, 'CONCLUIDO', 100),
-(4, 4, 3, 'EM_ANDAMENTO', 75.5),
-(5, 5, 4, 'NAO_INICIADO', 0);
+(1, 1, 3, 'NAO_INICIADO', 0),
+(2, 1, 5, 'NAO_INICIADO', 0),
+(3, 2, 3, 'EM_ANDAMENTO', 50),
+(4, 3, 5, 'NAO_INICIADO', 0),
+(5, 4, 3, 'NAO_INICIADO', 0),
+(6, 5, 3, 'NAO_INICIADO', 0),
+(7, 6, 5, 'NAO_INICIADO', 0);
 
 -- --------------------------------------------------------
 
@@ -92,11 +107,9 @@ CREATE TABLE `empresa` (
 --
 
 INSERT INTO `empresa` (`idEmpresa`, `nome`, `dataHoraCriacao`) VALUES
-(1, 'Tech Solutions Ltda', '2024-01-10 08:00:00'),
-(2, 'Consultoria Silva & Associados', '2024-01-12 09:30:00'),
-(3, 'Indústria Metalúrgica Beta', '2024-02-01 14:00:00'),
-(4, 'StartUp Inova Rápido', '2024-03-15 10:00:00'),
-(5, 'Comércio Varejista Global', '2024-01-20 11:15:00');
+(1, 'Tech Solutions Ltda', '2025-11-27 17:50:23'),
+(2, 'InovaCorp SA', '2025-11-27 17:50:23'),
+(3, 'AgroMais Brasil', '2025-11-27 17:50:23');
 
 -- --------------------------------------------------------
 
@@ -115,12 +128,9 @@ CREATE TABLE `projeto` (
 --
 
 INSERT INTO `projeto` (`idProjeto`, `idCriador`, `nome`) VALUES
-(1, 1, 'Migração de Servidores Cloud'),
-(2, 1, 'Desenvolvimento App Mobile'),
-(3, 2, 'Campanha de Marketing Q3'),
-(4, 3, 'Auditoria Financeira 2024'),
-(5, 4, 'Automação da Linha de Montagem'),
-(6, 2, 'asd');
+(1, 1, 'Sistema de Gestão Interna'),
+(2, 2, 'Automação de Processos'),
+(3, 4, 'Plataforma de Vendas');
 
 -- --------------------------------------------------------
 
@@ -149,11 +159,13 @@ CREATE TABLE `rotina` (
 --
 
 INSERT INTO `rotina` (`idRotina`, `idProjeto`, `idCriador`, `nome`, `dataHoraCriacao`, `dataConclusao`, `dataLimite`, `horaConclusao`, `recorrente`, `recorrenciaRegra`, `status`, `prioridade`, `ultimaModificacao`) VALUES
-(1, 1, 1, 'Backup Diário do Banco', '2024-01-20 08:00:00', '2024-12-31', '2025-01-01 02:59:59', '23:00:00', 1, 'Diariamente', 'PENDENTE', 'ALTA', '2025-11-23 18:04:40'),
-(2, 2, 1, 'Reunião de Daily Scrum', '2024-02-01 08:30:00', '2024-10-15', '2024-10-15 12:30:00', '09:00:00', 1, 'Segunda a Sexta', 'EM_EXECUCAO', 'MEDIA', '2025-11-23 18:04:40'),
-(3, 3, 2, 'Envio de Newsletter Semanal', '2024-02-10 14:00:00', '2024-11-20', '2024-11-20 20:00:00', '10:00:00', 1, 'Sexta', 'CONCLUIDA', 'BAIXA', '2025-11-23 18:04:40'),
-(4, 4, 3, 'Conferência de Notas Fiscais', '2024-10-01 09:00:00', '2024-10-30', '2024-10-31 21:00:00', '18:00:00', 0, NULL, 'PENDENTE', 'ALTA', '2024-10-31 13:00:00'),
-(5, 5, 4, 'Manutenção Preventiva Robôs', '2024-11-01 07:00:00', '2024-12-01', '2024-12-05 15:00:00', '06:00:00', 1, 'Mensalmente', 'CANCELADA', 'MEDIA', '2025-11-23 18:04:40');
+(1, 1, 1, 'Backup Diário', '2025-11-27 17:50:23', '2025-11-30', NULL, '23:00:00', 1, 'DIARIO', 'PENDENTE', 'ALTA', '2025-11-27 20:50:23'),
+(2, 2, 2, 'Relatório Semanal', '2025-11-27 17:50:23', '2025-12-01', NULL, '18:00:00', 1, 'SEMANAL', 'PENDENTE', 'MEDIA', '2025-11-27 20:50:23'),
+(3, 3, 4, 'Atualização de Catálogo', '2025-11-27 17:50:23', '2025-12-05', NULL, NULL, 0, NULL, 'PENDENTE', 'BAIXA', '2025-11-27 20:50:23'),
+(4, 1, 1, 'Auditoria Mensal', '2025-11-27 17:50:23', '2025-12-10', NULL, '15:00:00', 1, 'MENSAL', 'PENDENTE', 'ALTA', '2025-11-27 20:50:23'),
+(5, 2, 2, 'Treinamento de Equipe', '2025-11-27 17:50:23', '2025-12-15', NULL, NULL, 0, NULL, 'PENDENTE', 'MEDIA', '2025-11-27 20:50:23'),
+(6, 3, 4, 'Campanha de Marketing', '2025-11-27 17:50:23', '2025-12-20', NULL, NULL, 0, NULL, 'PENDENTE', 'ALTA', '2025-11-27 20:50:23'),
+(7, 1, 1, 'Revisão de Segurança', '2025-11-27 17:50:23', '2025-12-25', NULL, '10:00:00', 0, NULL, 'PENDENTE', 'ALTA', '2025-11-27 20:50:23');
 
 -- --------------------------------------------------------
 
@@ -172,10 +184,10 @@ CREATE TABLE `rotinatag` (
 
 INSERT INTO `rotinatag` (`idRotina`, `idTag`) VALUES
 (1, 1),
-(1, 2),
-(2, 1),
-(4, 4),
-(5, 5);
+(2, 2),
+(3, 3),
+(4, 1),
+(6, 3);
 
 -- --------------------------------------------------------
 
@@ -196,10 +208,8 @@ CREATE TABLE `tag` (
 
 INSERT INTO `tag` (`idTag`, `idCriador`, `nome`, `cor`) VALUES
 (1, 1, 'Urgente', '#FF0000'),
-(2, 1, 'Backend', '#0000FF'),
-(3, 2, 'Frontend', '#00FF00'),
-(4, 3, 'Financeiro', '#FFFF00'),
-(5, 4, 'Manutenção', '#808080');
+(2, 2, 'Financeiro', '#0000FF'),
+(3, 4, 'Marketing', '#00FF00');
 
 -- --------------------------------------------------------
 
@@ -225,11 +235,12 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`idUsuario`, `idEmpresa`, `nome`, `cpf`, `email`, `senhaHash`, `nivel`, `status`, `segredo2FA`, `dataHoraInsercao`) VALUES
-(1, 1, 'Ana Pereira', '11122233344', 'ana.pereira@tech.com', '123', 'FUNCIONARIO', 'ATIVO', NULL, '2024-01-11 09:00:00'),
-(2, 1, 'Carlos Souza', '22233344455', 'carlos.souza@tech.com', '123', 'ADMIN', 'ATIVO', NULL, '2024-01-15 10:30:00'),
-(3, 2, 'Beatriz Lima', '33344455566', 'bia.lima@consultoria.com', '123', 'FUNCIONARIO', 'ATIVO', NULL, '2024-01-13 08:45:00'),
-(4, 3, 'Daniel Oliveira', '44455566677', 'daniel.o@metalbeta.com', '123', 'ADMIN', 'BLOQUEADO', NULL, '2024-02-02 13:20:00'),
-(5, 4, 'Eduardo Santos', '55566677788', 'edu.santos@inova.com', '123', 'FUNCIONARIO', 'INATIVO', NULL, '2024-03-16 11:00:00');
+(1, 1, 'Carlos Silva', '123.456.789-00', 'carlos@tech.com', 'hash_senha1', 'MASTER', 'ATIVO', NULL, '2025-11-27 17:50:23'),
+(2, 1, 'Ana Pereira', '987.654.321-00', 'ana@tech.com', 'hash_senha2', 'ADMIN', 'ATIVO', NULL, '2025-11-27 17:50:23'),
+(3, 1, 'João Souza', '111.222.333-44', 'joao@tech.com', 'hash_senha3', 'FUNCIONARIO', 'ATIVO', NULL, '2025-11-27 17:50:23'),
+(4, 2, 'Mariana Costa', '555.666.777-88', 'mariana@inova.com', 'hash_senha4', 'ADMIN', 'ATIVO', NULL, '2025-11-27 17:50:23'),
+(5, 2, 'Pedro Lima', '999.888.777-66', 'pedro@inova.com', 'hash_senha5', 'FUNCIONARIO', 'ATIVO', NULL, '2025-11-27 17:50:23'),
+(6, 3, 'Lucas Andrade', '222.333.444-55', 'lucas@agromais.com', 'hash_senha6', 'FUNCIONARIO', 'ATIVO', NULL, '2025-11-27 17:50:23');
 
 --
 -- Índices para tabelas despejadas
@@ -303,13 +314,13 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de tabela `acao`
 --
 ALTER TABLE `acao`
-  MODIFY `idAcao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `idAcao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT de tabela `delegacaorotina`
 --
 ALTER TABLE `delegacaorotina`
-  MODIFY `idDelegacao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `idDelegacao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de tabela `empresa`
@@ -327,7 +338,7 @@ ALTER TABLE `projeto`
 -- AUTO_INCREMENT de tabela `rotina`
 --
 ALTER TABLE `rotina`
-  MODIFY `idRotina` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `idRotina` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de tabela `tag`
@@ -339,7 +350,7 @@ ALTER TABLE `tag`
 -- AUTO_INCREMENT de tabela `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `idUsuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `idUsuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Restrições para tabelas despejadas
