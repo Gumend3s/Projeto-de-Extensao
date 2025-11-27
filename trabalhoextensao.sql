@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 27/11/2025 às 21:53
+-- Tempo de geração: 27/11/2025 às 22:27
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -46,14 +46,14 @@ CREATE TABLE `acao` (
 INSERT INTO `acao` (`idAcao`, `idRotina`, `idCriador`, `nome`, `definicaoConclusao`, `dataHoraCriacao`, `horaConclusao`, `status`, `ultimaModificacao`) VALUES
 (1, 1, 1, 'Executar script de backup', 'Rodar script no servidor principal', '2025-11-27 17:50:23', '22:30:00', 'PENDENTE', '2025-11-27 20:50:23'),
 (2, 1, 1, 'Verificar integridade dos arquivos', 'Checar logs de backup', '2025-11-27 17:50:23', '22:45:00', 'PENDENTE', '2025-11-27 20:50:23'),
-(3, 2, 2, 'Gerar relatório financeiro', 'Exportar dados do ERP', '2025-11-27 17:50:23', '17:00:00', 'PENDENTE', '2025-11-27 20:50:23'),
+(3, 2, 2, 'Gerar relatório financeiro', 'Exportar dados do ERP', '2025-11-27 17:50:23', '17:00:00', 'CONCLUIDA', '2025-11-27 21:23:13'),
 (4, 2, 2, 'Enviar relatório ao gestor', 'Enviar por e-mail ao Master', '2025-11-27 17:50:23', '17:30:00', 'PENDENTE', '2025-11-27 20:50:23'),
 (5, 3, 4, 'Atualizar preços', 'Inserir novos valores no sistema', '2025-11-27 17:50:23', NULL, 'PENDENTE', '2025-11-27 20:50:23'),
 (6, 3, 4, 'Revisar catálogo', 'Checar consistência dos dados', '2025-11-27 17:50:23', NULL, 'PENDENTE', '2025-11-27 20:50:23'),
 (7, 4, 1, 'Revisar logs de acesso', 'Checar registros de login e logout', '2025-11-27 17:50:23', '14:00:00', 'PENDENTE', '2025-11-27 20:50:23'),
 (8, 4, 1, 'Emitir relatório de auditoria', 'Gerar documento com achados', '2025-11-27 17:50:23', '15:00:00', 'PENDENTE', '2025-11-27 20:50:23'),
-(9, 5, 2, 'Preparar material de treinamento', 'Criar slides e apostilas', '2025-11-27 17:50:23', NULL, 'PENDENTE', '2025-11-27 20:50:23'),
-(10, 5, 2, 'Agendar sala de reunião', 'Reservar espaço físico', '2025-11-27 17:50:23', NULL, 'PENDENTE', '2025-11-27 20:50:23'),
+(9, 5, 2, 'Preparar material de treinamento', 'Criar slides e apostilas', '2025-11-27 17:50:23', NULL, 'CONCLUIDA', '2025-11-27 21:20:04'),
+(10, 5, 2, 'Agendar sala de reunião', 'Reservar espaço físico', '2025-11-27 17:50:23', NULL, 'CONCLUIDA', '2025-11-27 21:20:04'),
 (11, 6, 4, 'Criar peças publicitárias', 'Design de banners e posts', '2025-11-27 17:50:23', NULL, 'PENDENTE', '2025-11-27 20:50:23'),
 (12, 6, 4, 'Planejar cronograma de posts', 'Definir datas de publicação', '2025-11-27 17:50:23', NULL, 'PENDENTE', '2025-11-27 20:50:23'),
 (13, 7, 1, 'Testar firewall', 'Executar testes de vulnerabilidade', '2025-11-27 17:50:23', '09:00:00', 'PENDENTE', '2025-11-27 20:50:23'),
@@ -86,8 +86,8 @@ INSERT INTO `delegacaorotina` (`idDelegacao`, `idRotina`, `idFuncionario`, `stat
 (2, 1, 5, 'NAO_INICIADO', 0),
 (3, 2, 3, 'EM_ANDAMENTO', 50),
 (4, 3, 5, 'NAO_INICIADO', 0),
-(5, 4, 3, 'NAO_INICIADO', 0),
-(6, 5, 3, 'NAO_INICIADO', 0),
+(5, 4, 3, 'CONCLUIDO', 100),
+(6, 5, 3, 'EM_ANDAMENTO', 0),
 (7, 6, 5, 'NAO_INICIADO', 0);
 
 -- --------------------------------------------------------
@@ -160,10 +160,10 @@ CREATE TABLE `rotina` (
 
 INSERT INTO `rotina` (`idRotina`, `idProjeto`, `idCriador`, `nome`, `dataHoraCriacao`, `dataConclusao`, `dataLimite`, `horaConclusao`, `recorrente`, `recorrenciaRegra`, `status`, `prioridade`, `ultimaModificacao`) VALUES
 (1, 1, 1, 'Backup Diário', '2025-11-27 17:50:23', '2025-11-30', NULL, '23:00:00', 1, 'DIARIO', 'PENDENTE', 'ALTA', '2025-11-27 20:50:23'),
-(2, 2, 2, 'Relatório Semanal', '2025-11-27 17:50:23', '2025-12-01', NULL, '18:00:00', 1, 'SEMANAL', 'PENDENTE', 'MEDIA', '2025-11-27 20:50:23'),
+(2, 2, 2, 'Relatório Semanal', '2025-11-27 17:50:23', '2025-12-01', NULL, '18:00:00', 1, 'SEMANAL', 'EM_EXECUCAO', 'MEDIA', '2025-11-27 21:22:15'),
 (3, 3, 4, 'Atualização de Catálogo', '2025-11-27 17:50:23', '2025-12-05', NULL, NULL, 0, NULL, 'PENDENTE', 'BAIXA', '2025-11-27 20:50:23'),
 (4, 1, 1, 'Auditoria Mensal', '2025-11-27 17:50:23', '2025-12-10', NULL, '15:00:00', 1, 'MENSAL', 'PENDENTE', 'ALTA', '2025-11-27 20:50:23'),
-(5, 2, 2, 'Treinamento de Equipe', '2025-11-27 17:50:23', '2025-12-15', NULL, NULL, 0, NULL, 'PENDENTE', 'MEDIA', '2025-11-27 20:50:23'),
+(5, 2, 2, 'Treinamento de Equipe', '2025-11-27 17:50:23', '2025-12-15', NULL, NULL, 0, NULL, 'CONCLUIDA', 'MEDIA', '2025-11-27 21:22:15'),
 (6, 3, 4, 'Campanha de Marketing', '2025-11-27 17:50:23', '2025-12-20', NULL, NULL, 0, NULL, 'PENDENTE', 'ALTA', '2025-11-27 20:50:23'),
 (7, 1, 1, 'Revisão de Segurança', '2025-11-27 17:50:23', '2025-12-25', NULL, '10:00:00', 0, NULL, 'PENDENTE', 'ALTA', '2025-11-27 20:50:23');
 
