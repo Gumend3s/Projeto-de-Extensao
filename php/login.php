@@ -1,19 +1,18 @@
 <?php
 session_start();
 require_once 'conexao.php';
+require_once 'Usuario.php';
 
 $erro = "";
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $email = $_POST['email'];
-    $senha = $_POST['senha'];
+
+    $userSession = new Usuario($_POST['email'], $_POST['senha']);
 
     // Busca o usuário pelo email
-    $stmt = $pdo->prepare("SELECT * FROM Usuario WHERE email = :email");
-    $stmt->execute([':email' => $email]);
-    $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
+    $user = $userSession->getUser($_POST['email']);
 
-    // Verifica se usuário existe e se a senha bate com o hash
+    
     if ($usuario && $senha === $usuario['senhaHash']) {
 
         // Verifica se o status é ativo
