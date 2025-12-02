@@ -7,28 +7,27 @@ $erro = "";
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-    $userSession = new Usuario($_POST['email'], $_POST['senha']);
+    $userSession = new Usuario();
 
-    // Busca o usuário pelo email
-    $user = $userSession->getUser($_POST['email']);
-
+    $user = $userSession->getUser($pdo,$_POST['email']);
+    $senha = $user['senhaHash'];
     
-    if ($usuario && $senha === $usuario['senhaHash']) {
+    if ($user && $senha === $user['senhaHash']) {
 
         // Verifica se o status é ativo
-        if ($usuario['status'] != 'ATIVO') {
+        if ($user['status'] != 'ATIVO') {
             $erro = "Usuário bloqueado ou inativo.";
         } 
         // Verifica se o nível é permitido (apenas ADMIN e MASTER)
-        elseif ($usuario['nivel'] == 'FUNCIONARIO') {
+        elseif ($user['nivel'] == 'FUNCIONARIO') {
             $erro = "Acesso negado. Apenas administradores podem fazer login.";
         } 
         else {
             // Salva dados na sessão
-            $_SESSION['idUsuario'] = $usuario['idUsuario'];
-            $_SESSION['nome'] = $usuario['nome'];
-            $_SESSION['idEmpresa'] = $usuario['idEmpresa'];
-            $_SESSION['nivel'] = $usuario['nivel'];
+            $_SESSION['idUsuario'] = $user['idUsuario'];
+            $_SESSION['nome'] = $user['nome'];
+            $_SESSION['idEmpresa'] = $user['idEmpresa'];
+            $_SESSION['nivel'] = $user['nivel'];
 
             // Redireciona para o painel
             header('Location: interface.php');
