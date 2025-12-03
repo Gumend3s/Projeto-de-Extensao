@@ -9,29 +9,27 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $userSession = new Usuario();
 
-    $user = $userSession->getUser($pdo,$_POST['email']);
-    $senha = $user['senhaHash'];
+    $userSession->createClassUser($pdo,$_POST['email'],$_POST['senha']);
     
-    if ($user && $senha === $user['senhaHash']) {
+    if ($userSession&&$userSession->getAcess($_POST['senha'])) {
 
-        // Verifica se o status é ativo
-        if ($user['status'] != 'ATIVO') {
+        
+        if ($userSession->getAtivity()) {
             $erro = "Usuário bloqueado ou inativo.";
-        } 
-        // Verifica se o nível é permitido (apenas ADMIN e MASTER)
-        elseif ($user['nivel'] == 'FUNCIONARIO') {
-            $erro = "Acesso negado. Apenas administradores podem fazer login.";
+        }
+
+        if ($userSession->getNivelAcess()) {
+            if ($userSession->createSessionUser()) {
+                    header('Location: interface.php');
+                    exit;
+                } else {
+                    $erro = "Falha ao criar sessão do usuário.";
+                }
+            
         } 
         else {
-            // Salva dados na sessão
-            $_SESSION['idUsuario'] = $user['idUsuario'];
-            $_SESSION['nome'] = $user['nome'];
-            $_SESSION['idEmpresa'] = $user['idEmpresa'];
-            $_SESSION['nivel'] = $user['nivel'];
+            $erro = "Acesso negado. Apenas administradores podem fazer login.";
 
-            // Redireciona para o painel
-            header('Location: interface.php');
-            exit;
         }
 
     } else {
