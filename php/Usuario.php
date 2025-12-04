@@ -2,17 +2,27 @@
 require_once 'conexao.php';
 
 class Usuario {
-    private $id;
-    private $name;
-    private $cpf;
-    private $email;
-    private $passHash;
-    private $nivel;
-    private $status;
-    private $dataHoraInsercao;
-    private $idEmpresa;
+    private ?int $id;
+    private ?string $name;
+    private ?string $cpf;
+    private ?string $email;
+    private ?string $passHash;
+    private ?string $nivel;
+    private ?string $status;
+    private ?string $dataHoraInsercao;
+    private ?int $idEmpresa;
 
-    public function __construct($id=null, $name=null, $cpf=null, $email=null, $passHash=null, $nivel=null, $status=null, $dataHoraInsercao=null, $idEmpresa=null) {
+    public function __construct(
+        ?int $id=null, 
+        ?string $name=null, 
+        ?string $cpf=null, 
+        ?string $email=null, 
+        ?string $passHash=null, 
+        ?string $nivel=null, 
+        ?string $status=null, 
+        ?string $dataHoraInsercao=null, 
+        ?int $idEmpresa=null
+        ) {
         $this->id = $id;
         $this->name = $name;
         $this->cpf = $cpf;
